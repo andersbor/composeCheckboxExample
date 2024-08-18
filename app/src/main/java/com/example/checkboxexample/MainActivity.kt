@@ -30,12 +30,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             CheckboxExampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    // innerPadding should be used in the root composable of the screen
                     Column(modifier = Modifier.padding(innerPadding)) {
                         CheckboxSample()
 
                         var checked by remember { mutableStateOf(true) }
                         LabeledCheckbox(
-                            text = "Another box",
+                            label = "Another box",
                             checked = checked,
                             onCheckedChange = { checked = it })
                         Text(text = "Checkbox is $checked")
@@ -63,17 +64,20 @@ fun CheckboxSample(modifier: Modifier = Modifier) {
 
 @Composable
 fun LabeledCheckbox(
-    text: String,
+    label: String,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
+    // All composables should have a modifier parameter
+    // The modifier parameter should have a default value of Modifier
+    // The modifier parameter should be the first parameter with a default value
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text = text)
+        Text(text = label)
         Checkbox(checked = checked, onCheckedChange = onCheckedChange)
     }
 }
@@ -91,7 +95,7 @@ fun CheckboxSamplePreview() {
 fun LabeledCheckboxPreview() {
     CheckboxExampleTheme {
         LabeledCheckbox(
-            text = "Check it",
+            label = "Check it",
             checked = false,
             onCheckedChange = {}
         )
