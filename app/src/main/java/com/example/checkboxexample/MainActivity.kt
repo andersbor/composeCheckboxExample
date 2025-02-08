@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,20 +31,30 @@ class MainActivity : ComponentActivity() {
         setContent {
             CheckboxExampleTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // innerPadding should be used in the root composable of the screen
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        CheckboxSample()
-
-                        var checked by remember { mutableStateOf(true) }
-                        LabeledCheckbox(
-                            label = "Another box",
-                            checked = checked,
-                            onCheckedChange = { checked = it })
-                        Text(text = "Checkbox is $checked")
-                    }
+                    // Use innerPadding for the root composable of the screen
+                    MainContent(innerPadding)
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun MainContent(innerPadding: PaddingValues) {
+    Column(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()
+            .padding(8.dp)
+    ) {
+        CheckboxSample()
+
+        var checked by remember { mutableStateOf(true) }
+        LabeledCheckbox(
+            label = "Another box",
+            checked = checked,
+            onCheckedChange = { checked = it })
+        Text(text = "Checkbox is $checked")
     }
 }
 
@@ -68,7 +79,7 @@ fun LabeledCheckbox(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier
-    // All composables should have a modifier parameter
+    // All composable functions should have a modifier parameter
     // The modifier parameter should have a default value of Modifier
     // The modifier parameter should be the first parameter with a default value
 ) {
@@ -95,8 +106,8 @@ fun CheckboxSamplePreview() {
 fun LabeledCheckboxPreview() {
     CheckboxExampleTheme {
         LabeledCheckbox(
-            label = "Check it",
             checked = false,
+            label = "Check it",
             onCheckedChange = {}
         )
     }
