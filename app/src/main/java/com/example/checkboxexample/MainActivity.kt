@@ -55,6 +55,14 @@ private fun MainContent(innerPadding: PaddingValues) {
             checked = checked,
             onCheckedChange = { checked = it })
         Text(text = "Checkbox is $checked")
+
+        var checked2 by remember { mutableStateOf(true) }
+        LabeledCheckbox(
+            label = "Yet another box",
+            checked = checked2,
+            onCheckedChange = { checked2 = it },
+            modifier = Modifier.padding(top = 18.dp))
+        Text(text = "Checkbox is $checked2")
     }
 }
 
